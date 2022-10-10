@@ -54,3 +54,15 @@ This project also shows how to use context variables to dynamically change the m
     }
 
 ```
+
+## Run it
+```
+npm install
+node index.js
+```
+
+Issue the following GraphQL commands at http://localhost:4000/graphql to see it work.  Add a header variable `USER` with `eastUser` or `westUser` to see different results
+```
+query{agreements {id name}}
+mutation{createAgreements(input: [{id:10 name:"testing"}]) {agreements { id name }}}
+```
