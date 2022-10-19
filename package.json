@@ -2,16 +2,53 @@
   "name": "rbac_example",
   "version": "1.0.0",
   "description": "## Setup",
-  "main": "index.js",
-  "dependencies": {
-    "@neo4j/graphql": "^3.10.1",
-    "apollo-server": "^3.10.3",
-    "graphql": "^16.6.0",
-    "neo4j-driver": "^5.1.0"
+  "main": "src/index.js",
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.3.1"
   },
-  "devDependencies": {},
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.6.0",
+    "@neo4j/graphql": "^3.10.1",
+    "@neo4j/graphql-plugin-auth": "^1.1.0",
+    "apollo-server": "^3.10.3",
+    "dotenv": "^7.0.0",
+    "graphql": "^16.6.0",
+    "graphql-ws": "^5.11.2",
+    "log4js": "^6.7.0",
+    "neo4j-driver": "^5.1.0",
+    "ws": "^8.8.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/runtime-corejs3": "^7.9.2",
+    "babel-plugin-auto-import": "^1.0.5",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-mocha": "^9.0.0",
+    "esm": "^3.2.25",
+    "lodash": "^4.17.21",
+    "mocha": "^8.3.0",
+    "nodemon": "^1.19.1",
+    "nyc": "^15.1.0",
+    "shx": "^0.3.2",
+    "supertest": "^6.1.4",
+    "testcontainers": "^7.18.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir build",
+    "test": "npm run build && nyc --reporter=html mocha --require @babel/register --recursive --exit --timeout 120000",
+    "start:dev": "cross-env DEBUG=@neo4j/graphql:* ./node_modules/.bin/nodemon --watch src --ext js,graphql --exec babel-node  src/index.js",
+    "build-debug": "babel src --out-dir build --source-maps",
+    "now-build": "babel src --out-dir build",
+    "start": "npm run build && node --unhandled-rejections=strict build/index.js",
+    "debug": "npm run build-debug && node --unhandled-rejections=strict --no-lazy --inspect build/index.js"
   },
   "repository": {
     "type": "git",

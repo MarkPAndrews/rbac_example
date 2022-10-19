@@ -5,13 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/index.js"
+            "command": "nvm use 16; npm run debug",
+            "name": "RBAC",
+            "type": "node-terminal",
+            "request": "launch"
+        },
+        {
+            "command": "nvm use 16; npm run test",
+            "name": "RBAC Tests",
+            "type": "node-terminal",
+            "request": "launch"
         }
     ]
 }
