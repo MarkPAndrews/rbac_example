@@ -103,7 +103,6 @@ export async function getContext(req,connection){
             const result = await runQuery(USER_QUERY, {user});
             if (!result.records || !result.records.length) {
                 msg = `Unauthorized - "${user}" not in graph or not loginAllowed`
-                logger.error("Unauthorized " + msg);
                 throw new AuthenticationError(msg);
             }
             profile = result.records[0].get('u'); 
