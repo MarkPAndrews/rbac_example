@@ -59,7 +59,7 @@ export async function getContext(req,connection){
   }
 ```
 Disclaimer:  The JWT implementation is a bit of a hack here.  Ideally we would be able to use the OOTB Auth Plugin to handle the JWT but that happens after the context method is called.  So it's a bit of a catch 22.  The Auth Plugin uses the request in the context to get the token, but we need to return the executionContext in the context as it's being created.
-The work-around is to manually use the auth plugin inside the context function and also assign it as a plugin so that the context.auth gets set as well.  Return auth from the context method doesn't work because it gets overwritten if no plugin is assigned.
+The work-around is to manually use the auth plugin inside the context function and also assign it as a plugin so that the context.auth gets set as well.  Returning auth from the context method doesn't work because it gets overwritten if no plugin is assigned.
 
 ## Extra Credit
 This project also shows how to use context variables to dynamically change the model.  In this case it's addin the regional label to `Agreement` based on the current user.  In this case `label` is derived from a role assigned in the graph.  It could come from a JWT claim. It depends on where you want to manage roles. 
@@ -78,7 +78,7 @@ If you already have OKTA or something like it set up, great!  If not the easiest
 
 ```
 npm install
-npm run
+npm start
 ```
 
 Issue the following GraphQL commands at http://localhost:4001/graphql to see it work.  You'll need to get JWT tokens for `eastUser` and `westUser` to see it work.  Alternatively you can change `index.js` to use the `TestAuthPlugin` class instead.  Then generate your own unsigned JWT and send that in.
