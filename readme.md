@@ -81,7 +81,7 @@ npm install
 npm run
 ```
 
-Issue the following GraphQL commands at http://localhost:4001/graphql to see it work.  You'll need to get JWT tokens for `eastUser` and `westUser` to see it work.  Alternatively you can change `index.js` to use the `TestAuthPlugin` class instead.  Then generate your own unsigned JWT and send that in.
+Issue the following GraphQL commands at http://localhost:4001/graphql to see it work.  You'll need to get JWT tokens for `eastUser` and `westUser` to see it work.  Alternatively you can change `index.js` to use the `TestAuthPlugin` class instead.  Then generate your own unsigned JWT and send that in.  See `sendGqlAllOutput` in `testUtils.js` for an example of what it's looking for.
 ```
 query{agreements {id name}}
 mutation{createAgreements(input: [{id:10 name:"testing"}]) {agreements { id name }}}
