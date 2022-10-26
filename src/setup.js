@@ -117,7 +117,7 @@ export async function getContext(req,connection){
     return {
         driver,
         req: request,
-        executionContext: driver.session({ impersonatedUser: user }),
+        executionContext: driver.session({ database:databaseName, impersonatedUser: user }),
         userProfile: profile,
         label
     };
@@ -289,12 +289,12 @@ export function createDriver(uri, username, password, databaseName, encrypted=fa
     logger.info(driver);
 }
 
-export async function runQuery(query, args, writeMode,bookmarks){
+export async function runQuery(query, args, writeMode,user,bookmarks){
     // logger.info(3, driver.session);
     writeMode = writeMode === true;
     logger.debug('query=' + query);
     if (args) logger.debug(':params ' + JSON.stringify(args));
-    const session = driver.session({database: databaseName, bookmarks});
+    const session = driver.session({database: databaseName, bookmarks, impersonatedUser:user});
     let result;
     try {
         result = (writeMode) 
@@ -310,12 +310,12 @@ export async function runQuery(query, args, writeMode,bookmarks){
     }
 }
 
-export async function readQuery(query, args){
-    return runQuery(query, args, false); 
+export async function readQuery(query, args,user){
+    return runQuery(query, args, false, user); 
 }
 
-export async function writeQuery(query, args){
-    return runQuery(query, args, true);
+export async function writeQuery(query, args,user){
+    return runQuery(query, args, true, user);
 }
 
 export function processResult(result) {

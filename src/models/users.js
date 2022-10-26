@@ -13,7 +13,7 @@ export const getCurrentUser = async (context) => {
       RETURN user{.*,roles:collect(role{.*})} as user
       `;
         const args={id};
-        var result=await readQuery(query, args)
+        var result=await readQuery(query, args, id)
         result = processResult(result);
         return getFirstRowValue(result, "user", "Unable to fetch current user");
     } catch (error) {
